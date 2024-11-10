@@ -39,19 +39,19 @@ app.post('/messages', (req, res) => {
 })
 
 app.put('/messages', (req, res) => {
+  const increment = req.body.increment ? 1 : -1; // Increment or decrement based on button clicked
   db.collection('messages')
-  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-    $set: {
-      thumbUp:req.body.thumbUp + 1
-    }
-  }, {
-    sort: {_id: -1},
-    upsert: true
-  }, (err, result) => {
-    if (err) return res.send(err)
-    res.send(result)
-  })
-})
+    .findOneAndUpdate(
+      { name: req.body.name, msg: req.body.msg },
+      { $inc: { thumbUp: increment } }, // Use $inc to increment or decrement
+      { sort: { _id: -1 }, upsert: true },
+      (err, result) => {
+        if (err) return res.send(err);
+        res.send(result);
+      }
+    );
+});
+
 
 app.delete('/messages', (req, res) => {
   db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
