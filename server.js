@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
   db.collection('messages').find().toArray((err, result) => {
     if (err) return console.log(err)
     res.render('index.ejs', {messages: result})
-  })
+  }) 
 })
 
 app.post('/messages', (req, res) => {
