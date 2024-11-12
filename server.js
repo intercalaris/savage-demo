@@ -39,11 +39,11 @@ app.post('/messages', (req, res) => {
 })
 
 app.put('/messages', (req, res) => {
-  const increment = req.body.increment ? 1 : -1; // Increment or decrement based on button clicked
+  const increment = req.body.increment ? 1 : -1; 
   db.collection('messages')
     .findOneAndUpdate(
       { name: req.body.name, msg: req.body.msg },
-      { $inc: { thumbUp: increment } }, // Use $inc to increment or decrement
+      { $inc: { thumbUp: increment } }, 
       { sort: { _id: -1 }, upsert: true },
       (err, result) => {
         if (err) return res.send(err);
